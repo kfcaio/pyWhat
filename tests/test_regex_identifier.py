@@ -126,7 +126,8 @@ def test_bitcoin():
 
 def test_monero():
     r = regex_identifier.RegexIdentifier()
-    res = r.check(["47DF8D9NwtmefhFUghynYRMqrexiZTsm48T1hhi2jZcbfcwoPbkhMrrED6zqJRfeYpXFfdaqAT3jnBEwoMwCx6BYDJ1W3ub"])
+    res = r.check(
+        ["47DF8D9NwtmefhFUghynYRMqrexiZTsm48T1hhi2jZcbfcwoPbkhMrrED6zqJRfeYpXFfdaqAT3jnBEwoMwCx6BYDJ1W3ub"])
     assert "Monero (XMR) Wallet Address" in res[0]["Regex Pattern"]["Name"]
 
 
@@ -244,42 +245,58 @@ def test_cors():
     res = r.check(["Access-Control-Allow: *"])
     assert "Access" in str(res)
 
+
 def test_jwt():
     r = regex_identifier.RegexIdentifier()
     res = r.check(["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"])
     assert "JWT" in str(res)
+
 
 def test_s3():
     r = regex_identifier.RegexIdentifier()
     res = r.check(["http://s3.amazonaws.com/bucket/"])
     assert "S3" in str(res)
 
+
 def test_s3_internal():
     r = regex_identifier.RegexIdentifier()
     res = r.check(["s3://bucket/path/key"])
     assert "S3" in str(res)
+
 
 def test_s3_internal2():
     r = regex_identifier.RegexIdentifier()
     res = r.check(["s3://bucket/path/directory/"])
     assert "S3" in str(res)
 
+
 def test_arn():
     r = regex_identifier.RegexIdentifier()
     res = r.check(["arn:partition:service:region:account-id:resource"])
     assert "ARN" in str(res)
 
+
 def test_arn2():
     r = regex_identifier.RegexIdentifier()
-    res = r.check(["arn:partition:service:region:account-id:resourcetype/resource"])
+    res = r.check(
+        ["arn:partition:service:region:account-id:resourcetype/resource"])
     assert "ARN" in str(res)
+
 
 def test_arn3():
     r = regex_identifier.RegexIdentifier()
-    res = r.check(["arn:partition:service:region:account-id:resourcetype:resource"])
+    res = r.check(
+        ["arn:partition:service:region:account-id:resourcetype:resource"])
     assert "ARN" in str(res)
+
 
 def test_arn4():
     r = regex_identifier.RegexIdentifier()
     res = r.check(["arn:aws:s3:::my_corporate_bucket/Development/*"])
     assert "ARN" in str(res)
+
+
+def test_rg():
+    r = regex_identifier.RegexIdentifier()
+    res = r.check(["12.525.310-2"])
+    assert "Brazilian national ID number - Registro Geral" in str(res)

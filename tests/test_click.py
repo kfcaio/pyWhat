@@ -255,7 +255,8 @@ def test_file_fixture_bch():
 
 def test_file_fixture_bch2():
     runner = CliRunner()
-    result = runner.invoke(main, ["bitcoincash:qzlg6uvceehgzgtz6phmvy8gtdqyt6vf359at4n3lq"])
+    result = runner.invoke(
+        main, ["bitcoincash:qzlg6uvceehgzgtz6phmvy8gtdqyt6vf359at4n3lq"])
     assert result.exit_code == 0
     assert re.findall("blockchain", str(result.output))
 
@@ -287,11 +288,14 @@ def test_file_cors():
     assert result.exit_code == 0
     assert re.findall("Access", str(result.output))
 
+
 def test_file_jwt():
     runner = CliRunner()
-    result = runner.invoke(main, ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"])
+    result = runner.invoke(main, [
+                           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"])
     assert result.exit_code == 0
     assert re.findall("JWT", str(result.output))
+
 
 def test_file_s3():
     runner = CliRunner()
@@ -299,11 +303,13 @@ def test_file_s3():
     assert result.exit_code == 0
     assert re.findall("S3", str(result.output))
 
+
 def test_file_s3_2():
     runner = CliRunner()
     result = runner.invoke(main, ["s3://bucket/path/key"])
     assert result.exit_code == 0
     assert re.findall("S3", str(result.output))
+
 
 def test_file_s3_3():
     runner = CliRunner()
@@ -311,26 +317,42 @@ def test_file_s3_3():
     assert result.exit_code == 0
     assert re.findall("S3", str(result.output))
 
+
 def test_file_arn():
     runner = CliRunner()
-    result = runner.invoke(main, ["arn:partition:service:region:account-id:resource"])
+    result = runner.invoke(
+        main, ["arn:partition:service:region:account-id:resource"])
     assert result.exit_code == 0
     assert re.findall("ARN", str(result.output))
+
 
 def test_file_arn2():
     runner = CliRunner()
-    result = runner.invoke(main, ["arn:partition:service:region:account-id:resourcetype/resource"])
+    result = runner.invoke(
+        main, ["arn:partition:service:region:account-id:resourcetype/resource"])
     assert result.exit_code == 0
     assert re.findall("ARN", str(result.output))
+
 
 def test_file_arn3():
     runner = CliRunner()
-    result = runner.invoke(main, ["arn:partition:service:region:account-id:resourcetype:resource"])
+    result = runner.invoke(
+        main, ["arn:partition:service:region:account-id:resourcetype:resource"])
     assert result.exit_code == 0
     assert re.findall("ARN", str(result.output))
 
+
 def test_file_arn4():
     runner = CliRunner()
-    result = runner.invoke(main, ["arn:aws:s3:::my_corporate_bucket/Development/*"])
+    result = runner.invoke(
+        main, ["arn:aws:s3:::my_corporate_bucket/Development/*"])
     assert result.exit_code == 0
     assert re.findall("ARN", str(result.output))
+
+
+def test_file_rg():
+    runner = CliRunner()
+    result = runner.invoke(main, ["fixtures/file"])
+    assert result.exit_code == 0
+    assert re.findall(
+        "Brazilian national ID number - Registro Geral", str(result.output))
